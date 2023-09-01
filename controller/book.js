@@ -55,7 +55,31 @@ exports.getsinglebook=async(req,res)=>{
 
 exports.getallbook=async(req,res)=>{
     try {
-        
+        const {search,key}=req.query
+
+        if(key=="search"){
+            const data=await bookmodel.find({
+                $or:[
+                    {title:{$regex:search,$options:"i"}},
+                    {author:{$regex:search,$options:"i"}}
+                ]
+            })
+            return(res.status(200).send({
+                status:true,
+                data
+            }))
+        }
+        if(key=="filter"){
+            const data=await bookmodel.find({
+                $or:[
+                    {genre:{$regex:search,$options:"i"}},
+                ]
+            })
+            return(res.status(200).send({
+                status:true,
+                data
+            }))
+        }
         const data=await bookmodel.find()
         res.status(200).send({
             status:true,
