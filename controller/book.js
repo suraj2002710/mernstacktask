@@ -21,7 +21,7 @@ exports.addbook=async(req,res)=>{
 
 exports.deletebook=async(req,res)=>{
     try {
-        const {id}=req.body
+        const {id}=req.query
         const adddata=await bookmodel.deleteOne({_id:id})
         res.status(200).send({
             status:true,
